@@ -1,0 +1,13 @@
+﻿@model AccountViewModel
+<div>
+    <h2>
+        <a asp-controller="Account" asp-action="GetBalance" >Balance</a>
+        
+        <p>@Model.applicationUser.Email</p>
+        <a asp-controller="Account" asp-action="Withdrawform">Withdraw</a>
+        <a asp-controller="Account" asp-action="UserDetails">All Users</a>
+    </h2>
+    <h4>
+        <a asp-controller="Account" asp-action="NewUserform">New User</a>
+    </h4>
+</div>
