@@ -9,5 +9,7 @@ namespace Bankingsystem.ViewModels
     public class AccountViewModel
     {
         public ApplicationUser applicationUser { get; set; }
+        public int WithdrawAmount { get; set; }
+        public int DepositAmount { get; set; }
     }
 }

@@ -1,13 +1,13 @@
-﻿
+﻿@model ApplicationUser
+
 <div>
+    <h2>Welcome @Model.UserName !</h2>
     <h2>
-        <a asp-controller="Account" asp-action="GetBalance" >Balance</a>
-        
-        <p></p>
+        <a asp-controller="Account" asp-action="GetBalance">Balance</a>
+
+        <a asp-controller="Account" asp-action="Depositform">Deposit</a>
         <a asp-controller="Account" asp-action="Withdrawform">Withdraw</a>
-        <a asp-controller="Account" asp-action="UserDetails">All Users</a>
+        <a asp-controller="Account" asp-action="Details">Your Details</a>
     </h2>
-    <h4>
-        <a asp-controller="Account" asp-action="NewUserform">New User</a>
-    </h4>
+
 </div>

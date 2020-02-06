@@ -1,0 +1,15 @@
+﻿@model AccountViewModel
+
+<form asp-action="Withdraw" method="post">
+
+
+    <div class="form-group">
+        <label asp-for="WithdrawAmount" class="control-label">Please Enter Withdraw Amount</label>
+        <div class="col-md-5">
+            <input asp-for="WithdrawAmount" class="form-control" />
+            <span asp-validation-for="WithdrawAmount" class="text-danger"></span>
+        </div>
+    </div>
+
+    <input type="submit" class="btn btn-primary" value="Submit" />
+</form>
