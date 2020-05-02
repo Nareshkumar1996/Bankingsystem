@@ -1,0 +1,15 @@
+﻿@model RoleViewModel
+
+    <div>
+        <form method="post">
+            <div>
+                <label>Email</label>
+                @Html.DropDownListFor(x => x.Uname, RoleViewModel.GetUserlist(), "Select User Email", new { @class = "form-control" })
+            </div>
+            <div>
+                <label>Role</label>
+                @Html.DropDownListFor(x => x.Rname, RoleViewModel.GetRolelist(), "Select a Role", new { @class = "form-control" })
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>

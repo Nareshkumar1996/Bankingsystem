@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Dotnet core projects\\Bankingsystem\\Bankingsystem\\Bankingsystem.csproj": {}
+    "E:\\present git bank project\\Bankingsystem\\Bankingsystem\\Bankingsystem.csproj": {}
   },
   "projects": {
-    "E:\\Dotnet core projects\\Bankingsystem\\Bankingsystem\\Bankingsystem.csproj": {
+    "E:\\present git bank project\\Bankingsystem\\Bankingsystem\\Bankingsystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Dotnet core projects\\Bankingsystem\\Bankingsystem\\Bankingsystem.csproj",
+        "projectUniqueName": "E:\\present git bank project\\Bankingsystem\\Bankingsystem\\Bankingsystem.csproj",
         "projectName": "Bankingsystem",
-        "projectPath": "E:\\Dotnet core projects\\Bankingsystem\\Bankingsystem\\Bankingsystem.csproj",
-        "packagesPath": "C:\\Users\\ZS-DSK-0003\\.nuget\\packages\\",
-        "outputPath": "E:\\Dotnet core projects\\Bankingsystem\\Bankingsystem\\obj\\",
+        "projectPath": "E:\\present git bank project\\Bankingsystem\\Bankingsystem\\Bankingsystem.csproj",
+        "packagesPath": "C:\\Users\\naresh.k.ZUCISYSTEMS\\.nuget\\packages\\",
+        "outputPath": "E:\\present git bank project\\Bankingsystem\\Bankingsystem\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\ZS-DSK-0003\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\naresh.k.ZUCISYSTEMS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -25,6 +25,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "E:\\DG\\src\\sso\\project-cue\\SAML for .NET Core\\Bin": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

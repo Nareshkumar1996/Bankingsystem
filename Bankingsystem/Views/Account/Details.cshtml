@@ -1,7 +1,24 @@
 ﻿@model ApplicationUser
 
-<h2>ID: @Model.Id</h2>
-<h2>Username: @Model.UserName</h2>
-<h2>Email: @Model.Email</h2>
-<h2>PhoneNumber: @Model.PhoneNumber</h2>
-<h2>Age: @Model.Age</h2>
+
+
+<table class="table table-striped" border="1">
+    <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>PhoneNumber</th>
+            <th>Age</th>
+        </tr>
+    </thead>
+    
+    <tr>
+        <td>@Model.Id</td>
+        <td>@Model.UserName</td>
+        <td>@Model.Email</td>
+        <td>@Model.PhoneNumber</td>
+        <td>@Model.Age</td>
+    </tr>
+    
+</table>
