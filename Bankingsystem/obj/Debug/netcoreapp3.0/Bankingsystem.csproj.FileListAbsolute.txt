@@ -452,3 +452,4 @@ E:\present git bank project\Bankingsystem\Bankingsystem\obj\Debug\netcoreapp3.0\
 E:\present git bank project\Bankingsystem\Bankingsystem\obj\Debug\netcoreapp3.0\Bankingsystem.csproj.CopyComplete
 E:\present git bank project\Bankingsystem\Bankingsystem\obj\Debug\netcoreapp3.0\Bankingsystem.dll
 E:\present git bank project\Bankingsystem\Bankingsystem\obj\Debug\netcoreapp3.0\Bankingsystem.pdb
+E:\present git bank project\Bankingsystem\Bankingsystem\obj\Debug\netcoreapp3.0\Bankingsystem.csprojAssemblyReference.cache
