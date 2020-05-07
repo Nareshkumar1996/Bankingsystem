@@ -13,5 +13,6 @@ namespace Bankingsystem.Data
             : base(options)
         {
         }
+        public DbSet<Transaction> transactions { get; set; }
     }
 }

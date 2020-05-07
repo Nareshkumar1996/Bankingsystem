@@ -453,3 +453,5 @@ E:\present git bank project\Bankingsystem\Bankingsystem\obj\Debug\netcoreapp3.0\
 E:\present git bank project\Bankingsystem\Bankingsystem\obj\Debug\netcoreapp3.0\Bankingsystem.dll
 E:\present git bank project\Bankingsystem\Bankingsystem\obj\Debug\netcoreapp3.0\Bankingsystem.pdb
 E:\present git bank project\Bankingsystem\Bankingsystem\obj\Debug\netcoreapp3.0\Bankingsystem.csprojAssemblyReference.cache
+E:\present git bank project\Bankingsystem\Bankingsystem\obj\Debug\netcoreapp3.0\Razor\Views\Account\MoneyTransfer.cshtml.g.cs
+E:\present git bank project\Bankingsystem\Bankingsystem\obj\Debug\netcoreapp3.0\Razor\Views\Account\MiniStatement.cshtml.g.cs

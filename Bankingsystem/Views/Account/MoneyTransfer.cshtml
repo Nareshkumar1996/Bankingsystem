@@ -1,0 +1,20 @@
+﻿@model AccountViewModel
+
+<form asp-action="MoneyTransfer" method="post">
+
+
+    <div class="form-group">
+        <label class="control-label">Enter User ID</label>
+        <div class="col-md-5">
+            <input asp-for="DepositToUserId" class="form-control" />
+            <span asp-validation-for="DepositToUserId" class="text-danger"></span>
+        </div>
+        <label class="control-label">Enter Deposit Amount</label>
+        <div class="col-md-5">
+            <input asp-for="DepositAmount" class="form-control" />
+            <span asp-validation-for="DepositAmount" class="text-danger"></span>
+        </div>
+    </div>
+
+    <input type="submit" class="btn btn-primary" value="Submit" />
+</form>

@@ -45,11 +45,18 @@ namespace Bankingsystem.Controllers
         [HttpPost]
         public IActionResult Deposit(AccountViewModel accountViewModel)
         {
-            var wa = accountViewModel.DepositAmount;
+            var dp = accountViewModel.DepositAmount;
             var userid = _userManager.GetUserId(HttpContext.User);
             ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
-            user.BalanceAmount = user.BalanceAmount + wa;
+            user.BalanceAmount = user.BalanceAmount + dp;
+            Transaction transac = new Transaction();
+            transac.Datetime = DateTime.Now;
+            transac.Userid = user.Id;
+            transac.Narration = "You have deposited";
+            transac.Deposit = accountViewModel.DepositAmount;
+            transac.ClosingBalance = user.BalanceAmount;
             _appDbContext.Update(user);
+            _appDbContext.Update(transac);
             _appDbContext.SaveChanges();
             return View(accountViewModel);
         }
@@ -63,7 +70,16 @@ namespace Bankingsystem.Controllers
             var userid = _userManager.GetUserId(HttpContext.User);
             ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
             user.BalanceAmount = user.BalanceAmount - wa;
+
+            Transaction transac = new Transaction();
+            transac.Datetime = DateTime.Now;
+            transac.Userid = user.Id;
+            transac.Narration = "You have withdrawn";
+            transac.Withdrawl = wa;
+            transac.ClosingBalance = user.BalanceAmount;
+
             _appDbContext.Update(user);
+            _appDbContext.Update(transac);
             _appDbContext.SaveChanges();
             return View(accountViewModel);
 
@@ -73,6 +89,56 @@ namespace Bankingsystem.Controllers
             var userid = _userManager.GetUserId(HttpContext.User);
             ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
             return View(user);
+        }
+        public ViewResult MoneyTransfer()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> MoneyTransfer(AccountViewModel accountViewModel)
+        {
+            //Get logged in user details
+            var currentuserid = _userManager.GetUserId(HttpContext.User);
+            ApplicationUser currentuser = _userManager.FindByIdAsync(currentuserid).Result;
+            
+            //Get receiver end user details
+            ApplicationUser user = await _userManager.FindByIdAsync(accountViewModel.DepositToUserId);
+            user.BalanceAmount = user.BalanceAmount + accountViewModel.DepositAmount;
+            Transaction transac = new Transaction();
+            transac.Datetime = DateTime.Now;
+            transac.Userid = currentuser.Id;
+            transac.Narration = "You have deposited to "+ user.Email;
+            transac.Deposit = accountViewModel.DepositAmount;
+            transac.ClosingBalance = currentuser.BalanceAmount - accountViewModel.DepositAmount;
+            currentuser.BalanceAmount = currentuser.BalanceAmount - accountViewModel.DepositAmount;
+            _appDbContext.Update(user);
+            _appDbContext.Update(transac);
+            _appDbContext.Update(currentuser);
+            _appDbContext.SaveChanges();
+
+            UpdateReceiverchanges(user, currentuser, accountViewModel);
+            return View();
+        }
+
+        private void UpdateReceiverchanges(ApplicationUser user, ApplicationUser currentuser,AccountViewModel accountViewModel)
+        {
+            Transaction transac = new Transaction();
+            transac.Datetime = DateTime.Now;
+            transac.Userid = user.Id;
+            transac.Narration = currentuser.UserName + " has deposited";
+            transac.Deposit = accountViewModel.DepositAmount;
+            transac.ClosingBalance = user.BalanceAmount;
+            _appDbContext.Update(transac);
+            _appDbContext.SaveChanges();
+        }
+
+        public IActionResult MiniStatement()
+        {
+            Transaction transac = new Transaction();
+            var userid = _userManager.GetUserId(HttpContext.User);
+            ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
+            List<Transaction> transactionlist = _appDbContext.transactions.Where(a => a.Userid == user.Id).ToList();
+            return View(transactionlist);
         }
     }
 }

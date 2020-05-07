@@ -11,5 +11,7 @@ namespace Bankingsystem.ViewModels
         public ApplicationUser applicationUser { get; set; }
         public int WithdrawAmount { get; set; }
         public int DepositAmount { get; set; }
+        public string DepositToUserId { get; set; }
+        public List<Transaction> transaction { get; set; }
     }
 }
