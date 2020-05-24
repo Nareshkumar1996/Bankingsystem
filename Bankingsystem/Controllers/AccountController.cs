@@ -140,5 +140,29 @@ namespace Bankingsystem.Controllers
             List<Transaction> transactionlist = _appDbContext.transactions.Where(a => a.Userid == user.Id).ToList();
             return View(transactionlist);
         }
+        public ViewResult Recharge()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Recharge(AccountViewModel accountViewModel)
+        {
+            var userid = _userManager.GetUserId(HttpContext.User);
+            ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
+            user.BalanceAmount = user.BalanceAmount - accountViewModel.RechargeAmount;
+            Transaction transac = new Transaction
+            {
+                Datetime = DateTime.Now,
+                Userid = user.Id,
+                Narration = "Recharge " + accountViewModel.Network + "-" + accountViewModel.MobileNumber,
+                Withdrawl = accountViewModel.RechargeAmount,
+                ClosingBalance = user.BalanceAmount
+            };
+            _appDbContext.Update(user);
+            _appDbContext.Update(transac);
+            _appDbContext.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
     }
 }
