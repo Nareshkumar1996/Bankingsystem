@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - Bankingsystem</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/Style.css" />
 </head>
 <body>
     <header>
@@ -44,6 +45,23 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+
+        $("tbody tr td.colorchange").each(
+            function () {
+                if ($(this).text() == "InActive") {
+                   $(this).css("color", "#ff081f");
+                }
+                else if ($(this).text() == "Pending") {
+                   $(this).css("color", "#ffe000");
+                }
+                else if ($(this).text() == "Activated") {
+                   $(this).css("color", "#05ff0d");
+                }
+            }
+        );
+
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

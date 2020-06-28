@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Bankingsystem.Data;
 using Bankingsystem.Models;
 using Bankingsystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,10 +20,12 @@ namespace Bankingsystem.Controllers
     {
         private readonly ApplicationDbContext _appDbContext;
         private readonly UserManager<ApplicationUser> _userManager;
-        public AccountController(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager)
+        private readonly IEmailSender _emailSender;
+        public AccountController(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager, IEmailSender emailSender)
         {
             _appDbContext = applicationDbContext;
             _userManager = userManager;
+            _emailSender = emailSender;
         }
         // GET: /<controller>/
         public IActionResult Index()
@@ -163,6 +167,56 @@ namespace Bankingsystem.Controllers
             _appDbContext.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+        public IActionResult AllUsers()
+        {
+            List<ApplicationUser> allusers = new List<ApplicationUser>();
+            allusers =  _userManager.Users.ToList();
+            return View(allusers);
+        }
+        public async Task<IActionResult> MoreDetails(string id)
+        {
+           var user = await _userManager.FindByIdAsync(id);
+            return View(user);
+        }
+        
+        public async Task<IActionResult> EmailConfirm(string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var confirmationLink = Url.Action("ActivateUserEmail", "Account",
+                new { userId = user.Id, token = token }, Request.Scheme);
+            //await _emailSender.SendEmailAsync(email, "Confirm your email",
+            //            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(confirmationLink)}'>clicking here</a>.");
+            System.Diagnostics.Debug.WriteLine("Confirmation = "+confirmationLink);
+            user.Status = "Pending";
+            _appDbContext.Update(user);
+            _appDbContext.SaveChanges();
+
+            return View();
+        }
+        public async Task<IActionResult> ActivateUserEmail(string userId, string token)
+        {
+            if(userId == null || token == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if(user == null)
+            {
+                return View("User Not Found");
+            }
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            if (result.Succeeded)
+            {
+                user.Status = "Activated";
+                _appDbContext.Update(user);
+                _appDbContext.SaveChanges();
+                return View();
+            }
+
+            return View();
         }
     }
 }
