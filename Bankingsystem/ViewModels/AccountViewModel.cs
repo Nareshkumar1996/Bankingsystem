@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,6 +12,8 @@ namespace Bankingsystem.ViewModels
     {
         public ApplicationUser applicationUser { get; set; }
         public int WithdrawAmount { get; set; }
+
+        [Required]        
         public int DepositAmount { get; set; }
         public string DepositToUserId { get; set; }
         public List<Transaction> transaction { get; set; }

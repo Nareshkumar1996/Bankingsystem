@@ -2,43 +2,5 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-
-
-@if (SignInManager.IsSignedIn(User))
-{
-    if (User.IsInRole("Admin"))
-    {
-        <div>
-            <h2>Welcome @Model.UserName !</h2>
-            <h2>
-                <a asp-controller="Account" asp-action="AllUsers">All Users</a><br />
-                <a asp-controller="Account" asp-action="GetBalance">Balance</a><br />
-
-                <a asp-controller="Account" asp-action="Depositform">Deposit</a><br />
-                <a asp-controller="Account" asp-action="Withdrawform">Withdraw</a><br />
-                <a asp-controller="Account" asp-action="Details">Your Details</a><br />
-                <a asp-controller="Account" asp-action="MoneyTransfer">Money Transfer</a><br />
-                <a asp-controller="Account" asp-action="Recharge">Mobile Recharge</a><br />
-                <a asp-controller="Account" asp-action="MiniStatement">MiniStatement</a>
-            </h2>
-
-        </div>
-    }
-    else
-    {
-        <div>
-            <h2>Welcome @Model.UserName !</h2>
-            <h2>
-                <a asp-controller="Account" asp-action="GetBalance">Balance</a><br />
-
-                <a asp-controller="Account" asp-action="Depositform">Deposit</a><br />
-                <a asp-controller="Account" asp-action="Withdrawform">Withdraw</a><br />
-                <a asp-controller="Account" asp-action="Details">Your Details</a><br />
-                <a asp-controller="Account" asp-action="MoneyTransfer">Money Transfer</a><br />
-                <a asp-controller="Account" asp-action="Recharge">Mobile Recharge</a><br />
-                <a asp-controller="Account" asp-action="MiniStatement">MiniStatement</a>
-            </h2>
-
-        </div>
-    }
-}
+    <partial name="_SideBars" />
+    <h2>Welcome @Model.UserName !</h2>

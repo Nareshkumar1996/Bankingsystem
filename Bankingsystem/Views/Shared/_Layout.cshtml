@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="~/css/Style.css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
     <header>
@@ -31,15 +32,21 @@
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="container maincontainer">
+        
+        <div class="row">
             @RenderBody()
-        </main>
+        </div>
+            
+                
+            
+       
+        
     </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2019 - Bankingsystem - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2019 - Net Banking - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -60,6 +67,7 @@
                 }
             }
         );
+        $('#mtsuccessMessage').show().delay(5000).fadeOut();        
 
     </script>
     @RenderSection("Scripts", required: false)

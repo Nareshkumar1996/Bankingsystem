@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -100,7 +100,8 @@ namespace Bankingsystem.Areas.Identity.Pages.Account
             public string NearestBranch { get; set; }
 
             [Required]
-            [Display(Name = "DateofBirth")]
+            [DataType(DataType.Date)]
+            [Display(Name = "DateofBirth")]            
             public DateTime DateofBirth { get; set; }
 
             [Required]
@@ -184,17 +185,20 @@ namespace Bankingsystem.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+                Random random = new Random();
+
                 var user = new ApplicationUser { UserName = Input.UserName, Email = Input.Email, Status = "InActive",
-                Address = Input.Address,
-                Age = Input.Age,
-                MartialStatus = Input.MartialStatus,
-                Gender = Input.Gender,
-                Pincode = Input.Pincode,
-                State = Input.State,
-                City = Input.City,
-                NearestBranch = Input.NearestBranch,
-                DateOfBirth = Input.DateofBirth.Date,
-                AadhaarNo = Input.AaadhaarNo
+                    Address = Input.Address,
+                    Age = Input.Age,
+                    MartialStatus = Input.MartialStatus,
+                    Gender = Input.Gender,
+                    Pincode = Input.Pincode,
+                    State = Input.State,
+                    City = Input.City,
+                    NearestBranch = Input.NearestBranch,
+                    DateOfBirth = Input.DateofBirth,
+                    AadhaarNo = Input.AaadhaarNo,
+                    AccountNumber = random.Next()
                 };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
@@ -223,8 +227,7 @@ namespace Bankingsystem.Areas.Identity.Pages.Account
                     //}
                     //await _signInManager.SignInAsync(user, isPersistent: false);
                     //return RedirectToAction("Index", "Account");
-
-                    return RedirectToPage("./Login");
+                    return RedirectToPage("./MessageSuccess");
                 }
                 foreach (var error in result.Errors)
                 {

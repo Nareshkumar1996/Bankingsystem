@@ -1,20 +1,25 @@
 ﻿@model AccountViewModel
+<partial name="_SideBars" />
+<div class="col-md-9">
+    <form asp-action="MoneyTransfer" method="post">
 
-<form asp-action="MoneyTransfer" method="post">
 
-
-    <div class="form-group">
-        <label class="control-label">Enter User ID</label>
-        <div class="col-md-5">
-            <input asp-for="DepositToUserId" class="form-control" />
-            <span asp-validation-for="DepositToUserId" class="text-danger"></span>
+        <div class="form-group">
+            <label class="control-label">Enter User ID</label>
+            <div class="col-md-5 inputboxPad">
+                <input asp-for="DepositToUserId" class="form-control" required />
+                <span asp-validation-for="DepositToUserId" class="text-danger"></span>
+            </div>
+            <label class="control-label">Enter Deposit Amount</label>
+            <div class="col-md-5 inputboxPad">
+                <input asp-for="DepositAmount" class="form-control" min="1" required />
+                <span asp-validation-for="DepositAmount" class="text-danger"></span>
+            </div>
         </div>
-        <label class="control-label">Enter Deposit Amount</label>
-        <div class="col-md-5">
-            <input asp-for="DepositAmount" class="form-control" />
-            <span asp-validation-for="DepositAmount" class="text-danger"></span>
-        </div>
-    </div>
 
-    <input type="submit" class="btn btn-primary" value="Submit" />
-</form>
+        <input type="submit" class="w3-bar-item w3-button w3-dark-grey" value="Submit" />
+    </form>
+
+
+    <div id="mtsuccessMessage">@ViewBag.result</div>
+</div>

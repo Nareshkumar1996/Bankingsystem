@@ -1,0 +1,47 @@
+﻿
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    if (User.IsInRole("Admin"))
+    {
+        
+            
+            <div class="col-md-3">
+                <div class="w3-sidebar w3-light-grey w3-bar-block sideBar">
+                    <h3 class="w3-bar-item">Menu</h3>
+                    <a asp-controller="Account" asp-action="AllUsers" class="w3-bar-item w3-button removeUnderline">All Users</a>
+                    <a asp-controller="Account" asp-action="GetBalance" class="w3-bar-item w3-button removeUnderline">Balance</a>
+                    <a asp-controller="Account" asp-action="Depositform" class="w3-bar-item w3-button removeUnderline">Deposit</a>
+                    <a asp-controller="Account" asp-action="Withdrawform" class="w3-bar-item w3-button removeUnderline">Withdraw</a>
+                    <a asp-controller="Account" asp-action="Details" class="w3-bar-item w3-button removeUnderline">Your Details</a>
+                    <a asp-controller="Account" asp-action="MoneyTransfer" class="w3-bar-item w3-button removeUnderline">Money Transfer</a>
+                    <a asp-controller="Account" asp-action="Recharge" class="w3-bar-item w3-button removeUnderline">Mobile Recharge</a>
+                    <a asp-controller="Account" asp-action="MiniStatement" class="w3-bar-item w3-button removeUnderline">MiniStatement</a>
+                </div>
+            </div>           
+        
+    }
+    else
+    {
+        
+            
+            <div class="col-md-3">
+                <div class="w3-sidebar w3-light-grey w3-bar-block sideBar">
+                    <h3 class="w3-bar-item">Menu</h3>
+                    <a asp-controller="Account" asp-action="GetBalance" class="w3-bar-item w3-button removeUnderline">Balance</a>
+                    <a asp-controller="Account" asp-action="Depositform" class="w3-bar-item w3-button removeUnderline">Deposit</a>
+                    <a asp-controller="Account" asp-action="Withdrawform" class="w3-bar-item w3-button removeUnderline">Withdraw</a>
+                    <a asp-controller="Account" asp-action="Details" class="w3-bar-item w3-button removeUnderline">Your Details</a>
+                    <a asp-controller="Account" asp-action="MoneyTransfer" class="w3-bar-item w3-button removeUnderline">Money Transfer</a>
+                    <a asp-controller="Account" asp-action="Recharge" class="w3-bar-item w3-button removeUnderline">Mobile Recharge</a>
+                    <a asp-controller="Account" asp-action="MiniStatement" class="w3-bar-item w3-button removeUnderline">MiniStatement</a>
+                </div>
+            </div>
+            
+
+      
+    }
+}

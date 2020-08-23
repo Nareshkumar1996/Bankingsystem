@@ -8,6 +8,7 @@ namespace Bankingsystem.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        public int AccountNumber { get; set; }
         public int BalanceAmount { get; set; }
         public int Age { get; set; }
         public string Status { get; set; }
