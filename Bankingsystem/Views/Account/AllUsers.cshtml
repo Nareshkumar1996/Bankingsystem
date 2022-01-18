@@ -1,0 +1,28 @@
+﻿@model IEnumerable<ApplicationUser>
+    <partial name="_SideBars" />
+    <div class="col-md-9">
+        <table class="table table-striped table-dark">
+            <tr class="head">
+                <th>User ID</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Age</th>
+                <th>Balance Amount</th>
+                <th>Status</th>
+                <th>More Details</th>
+            </tr>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.Email</td>
+                    <td>@user.PhoneNumber</td>
+                    <td>@user.Age</td>
+                    <td>@user.BalanceAmount</td>
+                    <td class="colorchange">@user.Status</td>
+                    <td><a asp-controller="Account" asp-action="MoreDetails" asp-route-id="@user.Id">View Details</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+    

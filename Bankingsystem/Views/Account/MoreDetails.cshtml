@@ -1,0 +1,63 @@
+﻿@model ApplicationUser
+<partial name="_SideBars" />
+<div class="col-md-9">
+    <table class="table table-striped table-dark">
+        <tr class="head">
+            <th>User ID</th>
+            <th>User Name</th>
+            <th>Account Number</th>
+            <th>Email</th>
+            <th>EmailConfirmed</th>
+            <th>Phone Number</th>
+            <th>PhoneNumberConfirmed</th>
+            <th>Age</th>
+            <th>Balance Amount</th>
+        </tr>
+
+        <tr>
+            <td>@Model.Id</td>
+            <td>@Model.UserName</td>
+            <td>@Model.AccountNumber</td>
+            <td>@Model.Email</td>
+            <td>@Model.EmailConfirmed</td>
+            <td>@Model.PhoneNumber</td>
+            <td>@Model.PhoneNumberConfirmed</td>
+            <td>@Model.Age</td>
+            <td>@Model.BalanceAmount</td>
+        </tr>
+    </table>
+    <table class="table table-striped table-dark">
+        <tr class="head">
+            <th>Address</th>
+            <th>Age</th>
+            <th>Marital Status</th>
+            <th>Gender</th>
+            <th>State</th>
+            <th>City</th>
+            <th>Pincode</th>
+            <th>Nearest Branch</th>
+            <th>Date of Birth</th>
+            <th>Aadhaar No</th>
+        </tr>
+
+        <tr>
+            <td>@Model.Address</td>
+            <td>@Model.Age</td>
+            <td>@Model.MartialStatus</td>
+            <td>@Model.Gender</td>
+            <td>@Model.State</td>
+            <td>@Model.City</td>
+            <td>@Model.Pincode</td>
+            <td>@Model.NearestBranch</td>
+            <td>@Model.DateOfBirth</td>
+            <td>@Model.AadhaarNo</td>
+        </tr>
+    </table>
+    @if (Model.EmailConfirmed.Equals(false))
+    {
+        <form>
+            <input type="button" class="w3-bar-item w3-button w3-dark-grey" value="Send Email Confirmation Link" onclick="location.href='@Url.Action("EmailConfirm", "Account", new { email = Model.Email})'" />
+        </form>
+    }
+</div>
+

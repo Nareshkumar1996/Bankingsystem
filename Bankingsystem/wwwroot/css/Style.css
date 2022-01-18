@@ -1,0 +1,31 @@
+﻿tr.head {
+    background-color: #cc4848 !important;
+}
+.inputboxPad{
+    padding:0;
+}
+.removeUnderline{
+    text-decoration:none !important;
+}
+.sideBar{
+    height:auto !important
+}
+.box-shadow {
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, .05);
+    position: fixed;
+    top: 0px;
+    height: 60px;
+    width: 100%;
+    z-index: 99;
+}
+.maincontainer {
+    margin-top: 100px;
+    padding-bottom: 80px;
+}
+.widthsize{
+    width:50%;
+}
+#mtsuccessMessage {
+    color: green;
+    margin-top: 30px;
+}

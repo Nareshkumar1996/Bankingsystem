@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
@@ -46,6 +47,10 @@ namespace Bankingsystem.Areas.Identity.Pages.Account
 
         public class InputModel
         {
+            [Required]            
+            [Display(Name = "User Name")]
+            public string UserName { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -61,6 +66,111 @@ namespace Bankingsystem.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [Required]
+            [Display(Name = "Address")]
+            public string Address { get; set; }
+
+            [Required]
+            [Display(Name = "Age")]
+            public int Age { get; set; }
+
+            [Required]
+            [Display(Name = "MartialStatus")]
+            public string MartialStatus { get; set; }
+
+            [Required]
+            [Display(Name = "Gender")]
+            public string Gender { get; set; }
+
+            [Required]
+            [Display(Name = "Pincode")]
+            public int Pincode { get; set; }
+
+            [Required]
+            [Display(Name = "State")]
+            public string State { get; set; }
+
+            [Required]
+            [Display(Name = "City")]
+            public string City { get; set; }
+
+            [Required]
+            [Display(Name = "NearestBranch")]
+            public string NearestBranch { get; set; }
+
+            [Required]
+            [DataType(DataType.Date)]
+            [Display(Name = "DateofBirth")]            
+            public DateTime DateofBirth { get; set; }
+
+            [Required]
+            [Display(Name = "AaadhaarNo")]
+            public int AaadhaarNo { get; set; }
+
+        }
+        public static IEnumerable<SelectListItem> GetMaritalStatuslist()
+        {
+            List<SelectListItem> MStatus = new List<SelectListItem>();
+
+            MStatus.Add(new SelectListItem
+            {
+                Value = "Married",
+                Text = "Married"
+            }
+            );
+            MStatus.Add(new SelectListItem
+            {
+                Value = "Single",
+                Text = "Single"
+            }
+                );
+
+            return MStatus;
+        }
+        public static IEnumerable<SelectListItem> GetGenderlist()
+        {
+            List<SelectListItem> Gender = new List<SelectListItem>();
+
+            Gender.Add(new SelectListItem
+            {
+                Value = "Male",
+                Text = "Male"
+            }
+            );
+            Gender.Add(new SelectListItem
+            {
+                Value = "Female",
+                Text = "Female"
+            }
+                );
+
+            return Gender;
+        }
+        public static IEnumerable<SelectListItem> GetNearestBranchlist()
+        {
+            List<SelectListItem> BranchList = new List<SelectListItem>();
+
+            BranchList.Add(new SelectListItem
+            {
+                Value = "Valasaravakkam",
+                Text = "Valasaravakkam"
+            }
+            );
+            BranchList.Add(new SelectListItem
+            {
+                Value = "Porur",
+                Text = "Porur"
+            }
+                );
+            BranchList.Add(new SelectListItem
+            {
+                Value = "Ramapuram",
+                Text = "Ramapuram"
+            }
+                );
+
+            return BranchList;
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -75,7 +185,21 @@ namespace Bankingsystem.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                Random random = new Random();
+
+                var user = new ApplicationUser { UserName = Input.UserName, Email = Input.Email, Status = "InActive",
+                    Address = Input.Address,
+                    Age = Input.Age,
+                    MartialStatus = Input.MartialStatus,
+                    Gender = Input.Gender,
+                    Pincode = Input.Pincode,
+                    State = Input.State,
+                    City = Input.City,
+                    NearestBranch = Input.NearestBranch,
+                    DateOfBirth = Input.DateofBirth,
+                    AadhaarNo = Input.AaadhaarNo,
+                    AccountNumber = random.Next()
+                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -89,8 +213,8 @@ namespace Bankingsystem.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     //if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     //{
@@ -101,9 +225,9 @@ namespace Bankingsystem.Areas.Identity.Pages.Account
                     //    await _signInManager.SignInAsync(user, isPersistent: false);
                     //    return LocalRedirect(returnUrl);
                     //}
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Account");
-                    //return LocalRedirect(returnUrl);
+                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    //return RedirectToAction("Index", "Account");
+                    return RedirectToPage("./MessageSuccess");
                 }
                 foreach (var error in result.Errors)
                 {

@@ -39,7 +39,7 @@ namespace Bankingsystem
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<ApplicationUser> userManager)
         {
             if (env.IsDevelopment())
             {
@@ -59,6 +59,7 @@ namespace Bankingsystem
 
             app.UseAuthentication();
             app.UseAuthorization();
+            ModelExtensionBuilder.SeedUsers(userManager);
 
             app.UseEndpoints(endpoints =>
             {

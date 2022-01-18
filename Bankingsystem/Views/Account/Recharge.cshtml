@@ -1,0 +1,31 @@
+﻿@model AccountViewModel
+
+<partial name="_SideBars" />
+<div class="col-md-9">
+    <form class="form-horizontal" method="post">
+        <div class="form-group">
+            <label class="control-label" asp-for="MobileNumber">Mobile Number:</label>
+            <div class="">
+                <input type="number" class="form-control widthsize" asp-for="MobileNumber" id="mobileno" placeholder="Enter mobile number" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Network</label>
+            @Html.DropDownListFor(x => x.Network, AccountViewModel.GetNetworkList(), "Select Network", new { @class = "form-control widthsize" })
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" asp-for="RechargeAmount">Recharge Amount:</label>
+            <div class="">
+                <input type="number" class="form-control widthsize" asp-for="RechargeAmount" id="rechargeamt" placeholder="Enter recharge amount" min="10" required>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="">
+                <button type="submit" class="w3-bar-item w3-button w3-dark-grey">Submit</button>
+            </div>
+        </div>
+    </form>
+</div>
+
