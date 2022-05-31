@@ -97,43 +97,33 @@ namespace Bankingsystem.Controllers
         public async Task<IActionResult> MoneyTransfer(AccountViewModel accountViewModel)
         {
             //Get logged in user details
-            var currentuserid = _userManager.GetUserId(HttpContext.User);
-            ApplicationUser currentuser = _userManager.FindByIdAsync(currentuserid).Result;
-            
+            var loggedInUser = _accountService.FindUserById().Result;
+
             //Get receiver end user details
-            ApplicationUser user = await _userManager.FindByIdAsync(accountViewModel.DepositToUserId);
-            user.BalanceAmount = user.BalanceAmount + accountViewModel.DepositAmount;
-            Transaction transac = new Transaction
-            {
-                Datetime = DateTime.Now,
-                Userid = currentuser.Id,
-                Narration = "You have deposited to " + user.Email,
-                Deposit = accountViewModel.DepositAmount,
-                ClosingBalance = currentuser.BalanceAmount - accountViewModel.DepositAmount
-            };
-            currentuser.BalanceAmount = currentuser.BalanceAmount - accountViewModel.DepositAmount;
-            _appDbContext.Update(user);
-            _appDbContext.Update(transac);
-            _appDbContext.Update(currentuser);
+            var receiverUser = await _userManager.FindByIdAsync(accountViewModel.DepositToUserId);
+            receiverUser.BalanceAmount = receiverUser.BalanceAmount + accountViewModel.DepositAmount;
+            loggedInUser.BalanceAmount = loggedInUser.BalanceAmount - accountViewModel.DepositAmount;
+
+            var narration = ApplicationConstants.DepositedTo + receiverUser.Email;
+            var closingBalance = loggedInUser.BalanceAmount - accountViewModel.DepositAmount;
+
+            //Create new transaction for a person who sends money.
+            var transaction = _accountService.MapTransaction(loggedInUser.Id, narration, 0,
+                accountViewModel.DepositAmount, loggedInUser.BalanceAmount);
+            //Create new transaction for a person who receives money.
+            var receiverEndTransaction = _accountService.MapTransaction(receiverUser.Id,
+                loggedInUser.UserName + ApplicationConstants.HasDeposited, 0, accountViewModel.DepositAmount,
+                receiverUser.BalanceAmount);
+            
+            
+            _appDbContext.Update(receiverUser);
+            _appDbContext.Update(transaction);
+            _appDbContext.Update(loggedInUser);
+            _appDbContext.Update(receiverEndTransaction);
             _appDbContext.SaveChanges();
 
-            UpdateReceiverchanges(user, currentuser, accountViewModel);
-            ViewBag.result = "Money Transfered Successfully!";
+            ViewBag.result = "Money Transferred Successfully!";
             return View();
-        }
-
-        private void UpdateReceiverchanges(ApplicationUser user, ApplicationUser currentuser,AccountViewModel accountViewModel)
-        {
-            Transaction transac = new Transaction
-            {
-                Datetime = DateTime.Now,
-                Userid = user.Id,
-                Narration = currentuser.UserName + " has deposited",
-                Deposit = accountViewModel.DepositAmount,
-                ClosingBalance = user.BalanceAmount
-            };
-            _appDbContext.Update(transac);
-            _appDbContext.SaveChanges();
         }
 
         public IActionResult MiniStatement()
