@@ -126,13 +126,6 @@ namespace Bankingsystem.Controllers
             return View();
         }
 
-        public IActionResult MiniStatement()
-        {
-            var user = _accountService.FindUserById().Result;
-            var transactionList = _appDbContext.transactions.Where(a => a.Userid == user.Id).ToList();
-         
-            return View(transactionList);
-        }
         public ViewResult Recharge()
         {
             return View();
@@ -158,11 +151,19 @@ namespace Bankingsystem.Controllers
         {
             return View(accountViewModel);
         }
+
+        public IActionResult MiniStatement()
+        {
+            var user = _accountService.FindUserById().Result;
+            var transactionList = _appDbContext.transactions.Where(a => a.Userid == user.Id).ToList();
+
+            return View(transactionList);
+        }
         public IActionResult AllUsers()
         {
-            List<ApplicationUser> allusers = new List<ApplicationUser>();
-            allusers =  _userManager.Users.ToList();
-            return View(allusers);
+            var users = new List<ApplicationUser>();
+            users =  _userManager.Users.ToList();
+            return View(users);
         }
         public async Task<IActionResult> MoreDetails(string id)
         {
