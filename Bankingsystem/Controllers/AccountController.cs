@@ -6,6 +6,7 @@ using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Bankingsystem.Data;
 using Bankingsystem.Models;
+using Bankingsystem.Services;
 using Bankingsystem.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -23,25 +24,25 @@ namespace Bankingsystem.Controllers
         private readonly ApplicationDbContext _appDbContext;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailSender _emailSender;
+        private readonly IAccountService _accountService;
 
-        public AccountController(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager, IEmailSender emailSender)
+        public AccountController(ApplicationDbContext applicationDbContext, UserManager<ApplicationUser> userManager, IEmailSender emailSender, IAccountService accountService)
         {
             _appDbContext = applicationDbContext;
             _userManager = userManager;
             _emailSender = emailSender;
+            _accountService = accountService;
         }
         // GET: /<controller>/
         public IActionResult Index()
         {
-            var userid = _userManager.GetUserId(HttpContext.User);
-            ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
+            var user = _accountService.FindUserById().Result;
 
             return View(user);
         }
         public IActionResult GetBalance()
         {
-            var userid = _userManager.GetUserId(HttpContext.User);
-            ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
+            var user = _accountService.FindUserById().Result;
 
             return View(user);
         }
@@ -53,8 +54,8 @@ namespace Bankingsystem.Controllers
         public IActionResult Deposit(AccountViewModel accountViewModel)
         {
                 var dp = accountViewModel.DepositAmount;
-                var userid = _userManager.GetUserId(HttpContext.User);
-                ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
+         
+                var user = _accountService.FindUserById().Result;
                 user.BalanceAmount = user.BalanceAmount + dp;
                 Transaction transac = new Transaction();
                 transac.Datetime = DateTime.Now;
@@ -75,8 +76,8 @@ namespace Bankingsystem.Controllers
         public IActionResult Withdraw(AccountViewModel accountViewModel)
         {
             var wa = accountViewModel.WithdrawAmount;
-            var userid = _userManager.GetUserId(HttpContext.User);
-            ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
+            
+            var user = _accountService.FindUserById().Result;
             user.BalanceAmount = user.BalanceAmount - wa;
 
             Transaction transac = new Transaction();
@@ -94,8 +95,7 @@ namespace Bankingsystem.Controllers
         }
         public ViewResult Details()
         {
-            var userid = _userManager.GetUserId(HttpContext.User);
-            ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
+            var user = _accountService.FindUserById().Result;
             return View(user);
         }
         public ViewResult MoneyTransfer()
@@ -148,8 +148,8 @@ namespace Bankingsystem.Controllers
         public IActionResult MiniStatement()
         {
             Transaction transac = new Transaction();
-            var userid = _userManager.GetUserId(HttpContext.User);
-            ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
+            
+            var user = _accountService.FindUserById().Result;
             List<Transaction> transactionlist = _appDbContext.transactions.Where(a => a.Userid == user.Id).ToList();
             //AccountViewModel accountViewModel = new AccountViewModel();            
             //accountViewModel.transaction = transactionlist;
@@ -162,8 +162,7 @@ namespace Bankingsystem.Controllers
         [HttpPost]
         public IActionResult Recharge(AccountViewModel accountViewModel)
         {
-            var userid = _userManager.GetUserId(HttpContext.User);
-            ApplicationUser user = _userManager.FindByIdAsync(userid).Result;
+            var user = _accountService.FindUserById().Result;
             user.BalanceAmount = user.BalanceAmount - accountViewModel.RechargeAmount;
             Transaction transac = new Transaction
             {

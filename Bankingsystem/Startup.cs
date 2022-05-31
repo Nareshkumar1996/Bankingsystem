@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Bankingsystem.Models;
+using Bankingsystem.Services;
 
 namespace Bankingsystem
 {
@@ -33,6 +34,7 @@ namespace Bankingsystem
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddTransient<IAccountService, AccountService>();
             services.AddHttpContextAccessor();
             services.AddControllersWithViews();
             services.AddRazorPages();
