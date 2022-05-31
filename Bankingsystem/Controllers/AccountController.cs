@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Bankingsystem.Constants;
 using Bankingsystem.Data;
 using Bankingsystem.Models;
 using Bankingsystem.Services;
@@ -53,18 +54,14 @@ namespace Bankingsystem.Controllers
         [HttpPost]
         public IActionResult Deposit(AccountViewModel accountViewModel)
         {
-                var dp = accountViewModel.DepositAmount;
-         
                 var user = _accountService.FindUserById().Result;
-                user.BalanceAmount = user.BalanceAmount + dp;
-                Transaction transac = new Transaction();
-                transac.Datetime = DateTime.Now;
-                transac.Userid = user.Id;
-                transac.Narration = "You have deposited";
-                transac.Deposit = accountViewModel.DepositAmount;
-                transac.ClosingBalance = user.BalanceAmount;
+                user.BalanceAmount = user.BalanceAmount + accountViewModel.DepositAmount;
+
+                var transaction = _accountService.MapTransaction(user.Id, ApplicationConstants.Deposited, 0,
+                    accountViewModel.DepositAmount, user.BalanceAmount);
+
                 _appDbContext.Update(user);
-                _appDbContext.Update(transac);
+                _appDbContext.Update(transaction);
                 _appDbContext.SaveChanges();
                 return View(accountViewModel);
             
@@ -75,20 +72,14 @@ namespace Bankingsystem.Controllers
         }
         public IActionResult Withdraw(AccountViewModel accountViewModel)
         {
-            var wa = accountViewModel.WithdrawAmount;
-            
             var user = _accountService.FindUserById().Result;
-            user.BalanceAmount = user.BalanceAmount - wa;
+            user.BalanceAmount = user.BalanceAmount - accountViewModel.WithdrawAmount;
 
-            Transaction transac = new Transaction();
-            transac.Datetime = DateTime.Now;
-            transac.Userid = user.Id;
-            transac.Narration = "You have withdrawn";
-            transac.Withdrawl = wa;
-            transac.ClosingBalance = user.BalanceAmount;
+            var transaction = _accountService.MapTransaction(user.Id, ApplicationConstants.Withdrawn,
+                accountViewModel.WithdrawAmount, 0, user.BalanceAmount);
 
             _appDbContext.Update(user);
-            _appDbContext.Update(transac);
+            _appDbContext.Update(transaction);
             _appDbContext.SaveChanges();
             return View(accountViewModel);
 

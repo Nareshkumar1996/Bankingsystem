@@ -11,6 +11,7 @@ namespace Bankingsystem.Services
     public interface IAccountService
     {
         Task<ApplicationUser> FindUserById();
+        Transaction MapTransaction(string userId, string narration, int withdrawAmount, int depositAmount, int closingBalance);
     }
 
     public class AccountService : IAccountService
@@ -29,6 +30,20 @@ namespace Bankingsystem.Services
             var userid = _userManager.GetUserId(_httpContextAccessor.HttpContext.User);
             var user = await _userManager.FindByIdAsync(userid);
             return user;
+        }
+
+        public Transaction MapTransaction(string userId, string narration, int withdrawAmount, int depositAmount, int closingBalance)
+        {
+            var transaction = new Transaction
+            {
+                Userid = userId,
+                Datetime = DateTime.Now,
+                Narration = narration,
+                Withdrawl = String.IsNullOrEmpty(withdrawAmount.ToString()) ? 0 : withdrawAmount,
+                Deposit = String.IsNullOrEmpty(depositAmount.ToString()) ? 0 : depositAmount,
+                ClosingBalance = closingBalance
+            };
+            return transaction;
         }
     }
 }
