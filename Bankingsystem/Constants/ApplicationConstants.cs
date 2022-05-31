@@ -11,5 +11,7 @@ namespace Bankingsystem.Constants
         public const string Withdrawn = "You have withdrawn";
         public const string DepositedTo = "You have deposited to ";
         public const string HasDeposited = " has deposited";
+        public const string Recharge = "Recharge ";
+        public const string Hyphen = "-";
     }
 }

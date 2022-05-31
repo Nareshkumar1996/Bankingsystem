@@ -145,16 +145,14 @@ namespace Bankingsystem.Controllers
         {
             var user = _accountService.FindUserById().Result;
             user.BalanceAmount = user.BalanceAmount - accountViewModel.RechargeAmount;
-            Transaction transac = new Transaction
-            {
-                Datetime = DateTime.Now,
-                Userid = user.Id,
-                Narration = "Recharge " + accountViewModel.Network + "-" + accountViewModel.MobileNumber,
-                Withdrawl = accountViewModel.RechargeAmount,
-                ClosingBalance = user.BalanceAmount
-            };
+
+            var narration = ApplicationConstants.Recharge + accountViewModel.Network + ApplicationConstants.Hyphen +
+                            accountViewModel.MobileNumber;
+            var transaction =
+                _accountService.MapTransaction(user.Id, narration, accountViewModel.RechargeAmount, 0, user.BalanceAmount);
+
             _appDbContext.Update(user);
-            _appDbContext.Update(transac);
+            _appDbContext.Update(transaction);
             _appDbContext.SaveChanges();
 
             return RedirectToAction("RechargeSuccess", accountViewModel);
