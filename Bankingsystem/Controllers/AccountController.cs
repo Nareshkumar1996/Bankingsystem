@@ -128,13 +128,10 @@ namespace Bankingsystem.Controllers
 
         public IActionResult MiniStatement()
         {
-            Transaction transac = new Transaction();
-            
             var user = _accountService.FindUserById().Result;
-            List<Transaction> transactionlist = _appDbContext.transactions.Where(a => a.Userid == user.Id).ToList();
-            //AccountViewModel accountViewModel = new AccountViewModel();            
-            //accountViewModel.transaction = transactionlist;
-            return View(transactionlist);
+            var transactionList = _appDbContext.transactions.Where(a => a.Userid == user.Id).ToList();
+         
+            return View(transactionList);
         }
         public ViewResult Recharge()
         {
