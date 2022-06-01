@@ -115,7 +115,6 @@ namespace Bankingsystem.Controllers
                 loggedInUser.UserName + ApplicationConstants.HasDeposited, 0, accountViewModel.DepositAmount,
                 receiverUser.BalanceAmount);
             
-            
             _appDbContext.Update(receiverUser);
             _appDbContext.Update(transaction);
             _appDbContext.Update(loggedInUser);
