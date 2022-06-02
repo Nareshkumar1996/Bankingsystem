@@ -1,7 +1,8 @@
 ﻿@model RoleViewModel
 
-    <div>
-        <form method="post">
+<div>
+    <form method="post">
+        <div class="assignRole">
             <div>
                 <label>Email</label>
                 @Html.DropDownListFor(x => x.Uname, RoleViewModel.GetUserlist(), "Select User Email", new { @class = "form-control" })
@@ -11,5 +12,12 @@
                 @Html.DropDownListFor(x => x.Rname, RoleViewModel.GetRolelist(), "Select a Role", new { @class = "form-control" })
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
+        </div>
+    </form>
+
+</div>
+<div class="previousBtnCreateRole">
+    <div class="previous">
+        <a asp-controller="Roles" asp-action="Listroles">&laquo; Previous</a>
     </div>
+</div>

@@ -4,12 +4,12 @@
 
 <table class="table table-striped" border="1">
     <thead class="thead-dark">
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Add/Remove Users</th>
-            <th>Delete</th>
-        </tr>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Add/Remove Users</th>
+        <th>Delete</th>
+    </tr>
     </thead>
     @foreach (var role in Model)
     {
@@ -21,4 +21,7 @@
         </tr>
     }
 </table>
+<div class="previous">
+    <a asp-controller="Roles" asp-action="Index">&laquo; Previous</a>
+</div>
 
